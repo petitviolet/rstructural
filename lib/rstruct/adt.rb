@@ -7,11 +7,11 @@ module ADT
     @@adt_types ||= []
   end
 
-  def const(value = nil)
+  def const(value = nil, &block)
     if value
-      Rstruct.new(:value, __caller: caller).new(value)
+      Rstruct.new(:value, __caller: caller, &block).new(value)
     else
-      Rstruct.new(__caller: caller).new
+      Rstruct.new(__caller: caller, &block).new
     end.tap do |k|
       @@adt_types << k
       def k.name
@@ -20,7 +20,7 @@ module ADT
     end
   end
 
-  def data(*fields)
-    Rstruct.new(*fields, __caller: caller).tap { |k| @@adt_types << k.name }
+  def data(*fields, &block)
+    Rstruct.new(*fields, __caller: caller, &block).tap { |k| @@adt_types << k.name }
   end
 end

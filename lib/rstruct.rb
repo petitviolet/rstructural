@@ -1,5 +1,5 @@
 module Rstruct
-  def self.new(*attributes, __caller: nil)
+  def self.new(*attributes, __caller: nil, &block)
     begin
       kaller = __caller || caller
       names = kaller.map do |stack|
@@ -47,6 +47,7 @@ module Rstruct
           [#{attributes.map { |attr| "@#{attr}" }.join(', ')}]
         end
       RUBY
+      k.class_eval(&block) if block
     end
   end
 end
