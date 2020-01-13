@@ -1,11 +1,17 @@
 require "test_helper"
 
 class RstructTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Rstruct::VERSION
-  end
+  Type = Rstruct.new(:value)
 
-  def test_it_does_something_useful
-    assert false
+  def test_it_defines_struct
+    assert_equal Type.name, 'RstructTest::Type'
+    value = Type.new(100)
+    assert_equal value.value, 100
+    case value
+    in Type[n]
+        assert_equal n, 100
+    else
+      assert false
+    end
   end
 end
