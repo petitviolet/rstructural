@@ -1,4 +1,4 @@
-# Ruby structual types
+# Rstructural - Ruby structual types
 
 [![rstructural](https://badge.fury.io/rb/rstructural.svg)](https://badge.fury.io/rb/rstructural)
 
@@ -15,7 +15,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rstruct'
+gem 'rstructural'
 ```
 
 And then execute:
@@ -24,9 +24,30 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rstruct
+    $ gem install rstructural
 
 ## Usage
+
+### require
+
+```ruby
+require 'rstructural'
+# Imported these types
+# - Rstruct 
+# - Enum 
+# - ADT
+```
+
+or, require each modules with namespace `Rstructural`
+
+```ruby
+require 'rstructural/struct'
+# - Rstructural::Struct 
+require 'rstructural/enum'
+# - Rstructural::Enum 
+require 'rstructural/adt'
+# - Rstructural::ADT
+```
 
 ### Rstruct
 
