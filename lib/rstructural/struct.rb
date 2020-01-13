@@ -30,7 +30,7 @@ module Rstructural
 
         def ==(other)
           return false if other.class != self.class
-          #{attributes.map { |attr| "other.#{attr} == self.#{attr}" }.join(" && ")}
+          #{attributes.empty? ? true : attributes.map { |attr| "other.#{attr} == self.#{attr}" }.join(" && ")}
         end
 
         def inspect
