@@ -1,5 +1,7 @@
 # Ruby structual types
 
+[![rstructural](https://badge.fury.io/rb/rstructural.svg)](https://badge.fury.io/rb/rstructural)
+
 - Rstruct 
     - Struct implemented with Ruby
 - Enum
