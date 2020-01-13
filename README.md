@@ -1,8 +1,12 @@
-# Rstruct
+# Ruby structual types
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rstruct`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+- Rstruct 
+    - Struct implemented with Ruby
+- Enum
+    - A set of constants
+- Algebraic Data Type(ADT)
+    - A set of objects
+    - A object is a constant or a set of objects
 
 ## Installation
 
@@ -22,7 +26,100 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Rstruct
+
+```ruby
+module RstructSample
+  # define a struct type
+  Value = Rstruct.new(:value)
+
+  puts Value.name #=> 'RstructSample::Value'
+  puts value = Value.new(100) #=> 'RstructSample::Value(value: 100)
+  puts value == Value.new(100) #=> true
+  puts value.value == 100 #=> true
+  case value
+    in Value[n] # pattern match (Ruby 2.7~)
+    puts "here! value: #{n}" #=> 'here! value: 100'
+  else
+    raise
+  end
+end
+```
+
+### Enum
+
+```ruby
+module EnumSample
+  # define enum
+  module Status
+    extend Enum
+
+    # method(:enum) creates a enum value
+    OK = enum 200
+    NotFound = enum 404
+    InternalServerError = enum 500 do
+      # add block to define custom methods
+      def message
+        "Something wrong"
+      end
+    end
+  end
+
+  puts Status::OK #=> EnumSample::Status::OK(value: 200)
+  puts Status::InternalServerError.message  #=> Something wrong
+
+  # find enum by value
+  case Status.of(404)
+  in Status::NotFound
+    puts "NotFound!!!" #=> NotFound!!!
+  else
+    raise
+  end
+end
+```
+
+### ADT
+
+```ruby
+module AdtSample
+  # define ADT
+  module Shape
+    extend ADT
+
+    # define a constant object
+    Point = const
+
+    # define a object with 1 attribute
+    Circle = data :radius do |mod|
+      def scale(i)
+        Circle.new(radius * i)
+      end
+      def area
+        3.14 * radius * radius
+      end
+    end
+    # define a object with 2 attributes
+    Rectangle = data :width, :height do |mod|
+      def area
+        width * height
+      end
+    end
+
+  end
+
+  puts Shape::Point #=> AdtSample::Shape::Point
+  puts Shape::Rectangle.new(3, 4) #=> AdtSample::Shape::Rectangle(width: 3, height: 4)
+  puts Shape::Rectangle.new(3, 4).area #=> 12
+  puts Shape::Circle.new(5).scale(2).area #=> 314.0
+
+  case Shape::Rectangle.new(1, 2)
+  in Shape::Rectangle[Integer => i, Integer => j] if j % 2 == 0
+    puts "here! rectangle #{i}, #{j}" #=> here! rectangle 1, 2
+  else
+    raise
+  end
+end
+```
 
 ## Development
 
@@ -37,7 +134,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/petitv
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](https://petitviolet.mit-license.org/).
 
 ## Code of Conduct
 
