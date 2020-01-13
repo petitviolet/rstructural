@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in rstruct.gemspec
+# Specify your gem's dependencies in rstructural.gemspec
 gemspec
 
 gem "rake", "~> 12.0"

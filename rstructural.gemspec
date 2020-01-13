@@ -1,12 +1,12 @@
 Gem::Specification.new do |spec|
-  spec.name          = "rstruct"
+  spec.name          = "rstructural"
   spec.version       = "0.1.0"
   spec.authors       = ["petitviolet"]
   spec.email         = ["violethero0820@gmail.com"]
 
-  spec.summary       = %q{A kind of structure types for Ruby}
-  spec.description   = %q{Struct, Enum, ADT for Ruby implemented with Ruby}
-  spec.homepage      = "https://github.com/petitviolet/rstruct"
+  spec.summary       = %q{A kind of structural types for Ruby}
+  spec.description   = %q{Structural types, Struct, Enum and ADT for Ruby implemented with Ruby}
+  spec.homepage      = "https://github.com/petitviolet/rstructural"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
