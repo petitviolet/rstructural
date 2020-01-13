@@ -1,10 +1,10 @@
 require "test_helper"
 
-class RstructTest < Minitest::Test
-  Value = Rstruct.new(:value)
+class StructTest < Minitest::Test
+  Value = Struct.new(:value)
 
   def test_it_defines_struct
-    assert_equal Value.name, 'RstructTest::Value'
+    assert_equal Value.name, 'StructTest::Value'
     value = Value.new(100)
     assert_equal value.value, 100
     assert_equal value, Value.new(100)

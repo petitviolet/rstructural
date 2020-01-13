@@ -1,22 +1,23 @@
-module Rstruct
-  def self.new(*attributes, __caller: nil, &block)
-    begin
-      kaller = __caller || caller
-      names = kaller.map do |stack|
-        # ".../hoge.rb:7:in `<module:Hoge>'"
-        if (m = stack.match(/\A.+in `<(module|class):(.+)>.+/))
-          m[2]
-        end
-      end.reject(&:nil?).reverse
-      file_name, line_num = kaller[0].split(':')
-      line_executed = File.readlines(file_name)[line_num.to_i - 1]
-      names << line_executed.match(/\A\s*(\S+)\s*=/)[1] # "  Point = Rstruct.new(:x, :y)\n"
-      class_name = names.join('::')
-    rescue StandardError
-      class_name = 'Rstruct'
-    end
-    Class.new.tap do |k|
-      k.class_eval <<~RUBY
+module Rstructural
+  module Struct
+    def self.new(*attributes, __caller: nil, &block)
+      begin
+        kaller = __caller || caller
+        names = kaller.map do |stack|
+          # ".../hoge.rb:7:in `<module:Hoge>'"
+          if (m = stack.match(/\A.+in `<(module|class):(.+)>.+/))
+            m[2]
+          end
+        end.reject(&:nil?).reverse
+        file_name, line_num = kaller[0].split(':')
+        line_executed = File.readlines(file_name)[line_num.to_i - 1]
+        names << line_executed.match(/\A\s*(\S+)\s*=/)[1] # "  Point = Struct.new(:x, :y)\n"
+        class_name = names.join('::')
+      rescue StandardError
+        class_name = 'Struct'
+      end
+      Class.new.tap do |k|
+        k.class_eval <<~RUBY
         def initialize(#{attributes.join(', ')})
           #{attributes.map { |attr| "@#{attr} = #{attr}" }.join("\n")}
         end
@@ -46,8 +47,10 @@ module Rstruct
         def deconstruct
           [#{attributes.map { |attr| "@#{attr}" }.join(', ')}]
         end
-      RUBY
-      k.class_eval(&block) if block
+        RUBY
+        k.class_eval(&block) if block
+      end
     end
   end
 end
+

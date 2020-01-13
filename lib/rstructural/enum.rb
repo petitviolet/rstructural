@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../rstruct'
+require_relative './struct'
 
-module Enum
+module Rstructural::Enum
   def self.extended(mod)
     @@enum_values ||= []
   end
@@ -11,7 +11,7 @@ module Enum
     if (type = of(value))
       raise ArgumentError, "Enum '#{value}' already defined in #{type.name}"
     end
-    Rstruct.new(:value, __caller: caller, &block).new(value).tap do |k|
+    Rstructural::Struct.new(:value, __caller: caller, &block).new(value).tap do |k|
       @@enum_values << k
       def k.name
         self.class.name
