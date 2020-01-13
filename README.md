@@ -1,4 +1,4 @@
-# Rstructural - Ruby structual types
+# Rstructural - Ruby structural types
 
 [![rstructural](https://badge.fury.io/rb/rstructural.svg)](https://badge.fury.io/rb/rstructural)
 [![Actions Status](https://github.com/petitviolet/rstructural/workflows/test/badge.svg)](https://github.com/petitviolet/rstructural/actions)
