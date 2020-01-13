@@ -7,7 +7,7 @@ module Rstruct
         if (m = stack.match(/\A.+in `<(module|class):(.+)>.+/))
           m[2]
         end
-      end.reject(&:nil?)
+      end.reject(&:nil?).reverse
       file_name, line_num = kaller[0].split(':')
       line_executed = File.readlines(file_name)[line_num.to_i - 1]
       names << line_executed.match(/\A\s*(\S+)\s*=/)[1] # "  Point = Rstruct.new(:x, :y)\n"
