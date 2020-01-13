@@ -4,3 +4,4 @@ require_relative "../lib/rstruct/adt"
 require_relative "../lib/rstruct/enum"
 
 require "minitest/autorun"
+require 'byebug'
