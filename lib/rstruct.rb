@@ -27,6 +27,11 @@ module Rstruct
           "#{class_name}"
         end
 
+        def ==(other)
+          return false if other.class != self.class
+          #{attributes.map { |attr| "other.#{attr} == self.#{attr}" }.join(" && ")}
+        end
+
         def inspect
           if #{attributes.empty?}
             "#{class_name}"

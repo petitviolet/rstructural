@@ -7,6 +7,7 @@ class RstructTest < Minitest::Test
     assert_equal Type.name, 'RstructTest::Type'
     value = Type.new(100)
     assert_equal value.value, 100
+    assert_equal value, Type.new(100)
     case value
     in Type[n]
         assert_equal n, 100
