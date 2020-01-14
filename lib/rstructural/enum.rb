@@ -22,5 +22,11 @@ module Rstructural::Enum
   def of(value)
     self.class_variable_get(:@@enum_values).find { |v| v.value == value }
   end
+
+  def interface(&block)
+    self.class_variable_get(:@@enum_values).each do |t|
+      t.class.class_eval(&block)
+    end
+  end
 end
 

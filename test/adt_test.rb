@@ -13,6 +13,17 @@ class AdtTest < Minitest::Test
         Some.new(f.call(value))
       end
     end
+
+    interface do
+      def flat_map(&f)
+        case self
+        in None
+          None
+        in Some[value]
+          f.call(value)
+        end
+      end
+    end
   end
 
   def test_it_defines_adt
@@ -24,6 +35,9 @@ class AdtTest < Minitest::Test
     some = Option::Some.new(100)
     assert_equal some.value, 100
     assert_equal some.map(proc { |i| i * 2 }), Option::Some.new(200)
+
+    assert_equal some.flat_map { |v| Option::Some.new(v * 2) }, Option::Some.new(200)
+    assert_equal Option::None.flat_map { |v| Option::Some.new(v * 2) }, Option::None
 
     case some
     in Option::None
