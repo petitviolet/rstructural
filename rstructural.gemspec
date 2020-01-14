@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "rstructural"
-  spec.version       = "0.1.2"
+  spec.version       = "0.2.0"
   spec.authors       = ["petitviolet"]
   spec.email         = ["violethero0820@gmail.com"]
 
