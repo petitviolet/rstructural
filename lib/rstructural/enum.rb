@@ -3,8 +3,8 @@
 require_relative './struct'
 
 module Rstructural::Enum
-  def self.extended(mod)
-    @@enum_values ||= []
+  def self.extended(klass)
+    klass.class_variable_set(:@@enum_values, [])
   end
 
   def enum(value, &block)
@@ -12,7 +12,7 @@ module Rstructural::Enum
       raise ArgumentError, "Enum '#{value}' already defined in #{type.name}"
     end
     Rstructural::Struct.new(:value, __caller: caller, &block).new(value).tap do |k|
-      @@enum_values << k
+      self.class_variable_get(:@@enum_values) << k
       def k.name
         self.class.name
       end
@@ -20,7 +20,7 @@ module Rstructural::Enum
   end
 
   def of(value)
-    @@enum_values.find { |v| v.value == value }
+    self.class_variable_get(:@@enum_values).find { |v| v.value == value }
   end
 end
 
