@@ -129,12 +129,24 @@ module AdtSample
       end
     end
 
+    # define common interface
+    interface do 
+      def is_circle?
+        case self
+        in Circle 
+          true 
+        else
+          false
+        end
+      end
+    end
   end
 
   puts Shape::Point #=> AdtSample::Shape::Point
   puts Shape::Rectangle.new(3, 4) #=> AdtSample::Shape::Rectangle(width: 3, height: 4)
   puts Shape::Rectangle.new(3, 4).area #=> 12
   puts Shape::Circle.new(5).scale(2).area #=> 314.0
+  puts Shape::Circle.is_circle? #=> true
 
   case Shape::Rectangle.new(1, 2)
   in Shape::Rectangle[Integer => i, Integer => j] if j % 2 == 0
