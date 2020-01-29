@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+#
 module Rstructural
   module Struct
     def self.new(*attributes, __caller: nil, &block)
