@@ -21,7 +21,9 @@ module Rstructural::ADT
   end
 
   def data(*fields, &block)
-    Rstructural::Struct.new(*fields, __caller: caller, &block).tap { |k| self.class_variable_get(:@@adt_types) << k }
+    Rstructural::Struct.new(*fields, __caller: caller, &block).tap do |k|
+      self.class_variable_get(:@@adt_types) << k
+    end
   end
 
   def interface(&block)
