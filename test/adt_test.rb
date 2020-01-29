@@ -1,25 +1,25 @@
 require "test_helper"
 
 class AdtTest < Minitest::Test
-  module Option
+  module Maybe
     extend ADT
-    None = const do
+    Nothing = const do
       def map(f)
         self
       end
     end
-    Some = data :value do |mod|
+    Just = data :value do |mod|
       def map(f)
-        Some.new(f.call(value))
+        Just.new(f.call(value))
       end
     end
 
     interface do
       def flat_map(&f)
         case self
-        in None
-          None
-        in Some[value]
+        in Nothing
+          Nothing
+        in Just[value]
           f.call(value)
         end
       end
@@ -27,22 +27,22 @@ class AdtTest < Minitest::Test
   end
 
   def test_it_defines_adt
-    assert_equal Option::None.name, 'AdtTest::Option::None'
-    assert_equal Option::Some.name, 'AdtTest::Option::Some'
-    assert_raises(NoMethodError) { Option::None.new }
-    assert_raises(NoMethodError) { Option::None.value }
+    assert_equal Maybe::Nothing.name, 'AdtTest::Maybe::Nothing'
+    assert_equal Maybe::Just.name, 'AdtTest::Maybe::Just'
+    assert_raises(NoMethodError) { Maybe::Nothing.new }
+    assert_raises(NoMethodError) { Maybe::Nothing.value }
 
-    some = Option::Some.new(100)
+    some = Maybe::Just.new(100)
     assert_equal some.value, 100
-    assert_equal some.map(proc { |i| i * 2 }), Option::Some.new(200)
+    assert_equal some.map(proc { |i| i * 2 }), Maybe::Just.new(200)
 
-    assert_equal some.flat_map { |v| Option::Some.new(v * 2) }, Option::Some.new(200)
-    assert_equal Option::None.flat_map { |v| Option::Some.new(v * 2) }, Option::None
+    assert_equal some.flat_map { |v| Maybe::Just.new(v * 2) }, Maybe::Just.new(200)
+    assert_equal Maybe::Nothing.flat_map { |v| Maybe::Just.new(v * 2) }, Maybe::Nothing
 
     case some
-    in Option::None
+    in Maybe::Nothing
         assert false
-    in Option::Some[value]
+    in Maybe::Just[value]
         assert_equal value, 100
     else
       assert false
