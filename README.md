@@ -11,6 +11,13 @@
     - A set of objects
     - A object is a constant or a set of objects
 
+### Applied Types
+
+- Option
+    - Some or None
+- Either
+    - Left or Right
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -155,6 +162,41 @@ module AdtSample
     raise
   end
 end
+```
+
+### Rstructural::Option
+
+```ruby
+puts Option.of(100).map { |v| v * 2 } #=> Option::Some(value: 200)
+puts Option.of(nil).map { |v| v * 2 } #=> Option::None
+puts Option.of(100).flat_map { |v| Option.of(v * 2) } #=> Option::Some(value: 200)
+puts Option.of(100).flat_map { |v| v * 2 } #=> 200
+puts Option.of(nil).flat_map { |v| Option.of(v * 2) } #=> Option::None
+puts Option.of(100).get_or_else { 0 } #=> 100
+puts Option.of(nil).get_or_else(0) #=> 0
+puts Option.of(nil).get_or_else { 0 } #=> 0
+puts Option.of(nil).is_a?(Option) #=> true
+```
+
+### Rstructural::Either
+
+```ruby
+puts Either.try { 100 } #=> Either::Right(value: 100)
+puts Either.try { raise "this is error" } #=> Either::Left(value: this is error)
+puts Either.try { raise "this is error" }.value.inspect #=> #<RuntimeError: this is error>
+puts Either.right(100).map { |v| v * 2 } #=> Either::Right(value: 200)
+puts Either.left(100).map { |v| v * 2 } #=> Either::Left(value: 100)
+puts Either.left(100).map_left { |v| v * 2 } #=> Either::Left(value: 200)
+puts Either.right(100).flat_map { |v| Either.right(v * 2) } #=> Either::Right(value: 200)
+puts Either.right(100).flat_map { |v| Either.left(v * 2) } #=> Either::Left(value: 200)
+puts Either.left(100).flat_map { |v| Either.right(v * 2) } #=> Either::Left(value: 100)
+puts Either.left(100).flat_map_left { |v| Either.right(v * 2) } #=> Either::Right(value: 200)
+puts Either.right(100).right_or_else { 0 } #=> 100
+puts Either.left(100).right_or_else { 0 } #=> 0
+puts Either.right(100).left_or_else { 0 } #=> 0
+puts Either.left(100).left_or_else { 0 } #=> 100
+puts Either.right(100).right? #=> true
+puts Either.right(100).left? #=> false
 ```
 
 ## Development
