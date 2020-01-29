@@ -33,6 +33,8 @@ class AdtTest < Minitest::Test
     assert_raises(NoMethodError) { Maybe::Nothing.value }
 
     some = Maybe::Just.new(100)
+    assert_equal some.is_a?(Maybe), true
+    assert_equal Maybe::Nothing.is_a?(Maybe), true
     assert_equal some.value, 100
     assert_equal some.map(proc { |i| i * 2 }), Maybe::Just.new(200)
 

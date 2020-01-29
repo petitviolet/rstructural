@@ -5,6 +5,7 @@ require_relative './struct'
 module Rstructural::ADT
   def self.extended(klass)
     klass.class_variable_set(:@@adt_types, [])
+    klass.class_variable_set(:@@adt_super_class, klass)
   end
 
   def const(value = nil, &block)
@@ -14,6 +15,8 @@ module Rstructural::ADT
       Rstructural::Struct.new(__caller: caller, &block).new
     end.tap do |k|
       self.class_variable_get(:@@adt_types) << k
+      k.class.include(self.class_variable_get(:@@adt_super_class))
+
       def k.name
         self.class.name
       end
@@ -22,6 +25,7 @@ module Rstructural::ADT
 
   def data(*fields, &block)
     Rstructural::Struct.new(*fields, __caller: caller, &block).tap do |k|
+      k.include(self.class_variable_get(:@@adt_super_class))
       self.class_variable_get(:@@adt_types) << k
     end
   end
