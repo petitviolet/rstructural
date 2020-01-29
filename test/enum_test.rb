@@ -34,6 +34,10 @@ class EnumTest < Minitest::Test
     assert_equal Color::Blue.is_red?, false
     assert_equal Color::Green.to_red.is_red?, true
 
+    assert_equal Color::Red.is_a?(Color), true
+    assert_equal Color::Blue.is_a?(Color), true
+    assert_equal Color::Green.is_a?(Color), true
+
     case Color.of('blue')
     in Color::Red
         assert false

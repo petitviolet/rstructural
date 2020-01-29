@@ -5,6 +5,7 @@ require_relative './struct'
 module Rstructural::Enum
   def self.extended(klass)
     klass.class_variable_set(:@@enum_values, [])
+    klass.class_variable_set(:@@enum_super_class, klass)
   end
 
   def enum(value, &block)
@@ -13,6 +14,7 @@ module Rstructural::Enum
     end
     Rstructural::Struct.new(:value, __caller: caller, &block).new(value).tap do |k|
       self.class_variable_get(:@@enum_values) << k
+      k.class.include(self.class_variable_get(:@@enum_super_class))
       def k.name
         self.class.name
       end
