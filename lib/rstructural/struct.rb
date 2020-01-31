@@ -30,6 +30,11 @@ module Rstructural
           "#{class_name}"
         end
 
+        def [](key)
+          _key = ("@" + key.to_s).to_sym
+          self.instance_variable_get(_key)
+        end
+
         def ==(other)
           return false if other.class != self.class
           #{attributes.empty? ? true : attributes.map { |attr| "other.#{attr} == self.#{attr}" }.join(" && ")}

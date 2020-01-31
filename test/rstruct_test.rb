@@ -7,6 +7,7 @@ class StructTest < Minitest::Test
     assert_equal Value.name, 'StructTest::Value'
     value = Value.new(100)
     assert_equal value.value, 100
+    assert_equal value[:value], value.value
     assert_equal value, Value.new(100)
     case value
     in Value[n]
