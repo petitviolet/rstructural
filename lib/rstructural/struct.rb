@@ -30,6 +30,10 @@ module Rstructural
           "#{class_name}"
         end
 
+        def self.to_s
+          "<#{class_name}>"
+        end
+
         def [](key)
           _key = ("@" + key.to_s).to_sym
           self.instance_variable_get(_key)
@@ -44,7 +48,7 @@ module Rstructural
           if #{attributes.empty?}
             "#{class_name}"
           else
-            __attrs = Array[#{attributes.map { |attr| "'#{attr}: ' + @#{attr}.to_s" }.join(', ')}].join(", ")
+            __attrs = Array[#{attributes.map { |attr| "'#{attr}: ' + (@#{attr}.nil? ? 'nil' : @#{attr}.to_s)" }.join(', ')}].join(", ")
             "#{class_name}(" + __attrs + ")"
           end
         end
