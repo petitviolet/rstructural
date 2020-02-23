@@ -6,6 +6,8 @@ class StructTest < Minitest::Test
   def test_it_defines_struct
     assert_equal Value.name, 'StructTest::Value'
     value = Value.new(100)
+    assert value.is_a?(Value)
+    assert !value.is_a?(Integer)
     assert_equal value.value, 100
     assert_equal value[:value], value.value
     assert_equal value, Value.new(100)
