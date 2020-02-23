@@ -15,9 +15,13 @@ module Rstructural::Either
     Right.new(obj)
   end
 
-  def self.try(&block)
+  def self.try(catch_nil: false, &block)
     result = block.call
-    Right.new(result)
+    if catch_nil && result.nil?
+      Left.new(nil)
+    else
+      Right.new(result)
+    end
   rescue => e
     Left.new(e)
   end

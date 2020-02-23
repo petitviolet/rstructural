@@ -12,6 +12,8 @@ class EitherTest < Minitest::Test
     assert_equal Either.try { 100 }, Either::Right.new(100)
     assert_equal Either.try { nil }, Either::Right.new(nil)
     assert_equal Either.try { 100 }, Either::Right.new(100)
+    assert_equal Either.try(catch_nil: true) { nil }, Either::Left.new(nil)
+    assert_equal Either.try(catch_nil: false) { nil }, Either::Right.new(nil)
     left = Either.try { raise RuntimeError, "error" }
     assert_equal left.left?, true
     assert_equal left.value.message, "error"
