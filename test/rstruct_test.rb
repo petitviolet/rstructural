@@ -21,4 +21,10 @@ class StructTest < Minitest::Test
       assert false
     end
   end
+
+  def test_it_copy
+    value = Value.new(100)
+    assert_equal value.copy(value: 200), Value.new(200)
+    assert_equal value.copy(), value
+  end
 end

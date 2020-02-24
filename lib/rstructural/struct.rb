@@ -34,6 +34,10 @@ module Rstructural
           "<#{class_name}>"
         end
 
+        def copy(#{attributes.map { |attr| "#{attr}: self.#{attr}"}.join(', ')})
+          self.class.new(#{attributes.map { |attr| "#{attr}" }.join(', ')})
+        end
+
         def [](key)
           _key = ("@" + key.to_s).to_sym
           self.instance_variable_get(_key)
