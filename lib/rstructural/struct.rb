@@ -62,6 +62,10 @@ module Rstructural
         def deconstruct
           [#{attributes.map { |attr| "@#{attr}" }.join(', ')}]
         end
+
+        def deconstruct_keys(keys = nil)
+          {#{attributes.map { |attr| "'#{attr}'.to_sym => @#{attr}" }.join(', ')}}
+        end
         RUBY
         k.class_eval(&block) if block
       end
